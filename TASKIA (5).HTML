@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050406">
+<title>দোয়া — তোমার জন্য</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&family=Outfit:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═════════════════════════════════════════════════════════
+   দোয়া  ·  a quiet page
+   hand-built · no frameworks · no libraries
+   ═════════════════════════════════════════════════════════ */
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  /* ink */
+  --ink-000:#030204;
+  --ink-050:#050406;
+  --ink-100:#09080c;
+  /* gold — the only loud colour in the room */
+  --gold:#d9ad63;
+  --gold-soft:#e8ca96;
+  --gold-deep:#8d6b32;
+  --gold-ghost:rgba(217,173,99,.12);
+  /* quiet accents */
+  --rose:#c99aa8;
+  --violet:#9f8fc0;
+  /* text */
+  --t1:rgba(255,255,255,.90);
+  --t2:rgba(255,255,255,.46);
+  --t3:rgba(255,255,255,.18);
+  --hair:rgba(255,255,255,.055);
+  /* motion */
+  --ease:cubic-bezier(.19,1,.22,1);
+  --slow:1.15s;
+}
+
+html{
+  scroll-behavior:smooth;
+  -webkit-text-size-adjust:100%;
+  scrollbar-width:none;
+}
+html::-webkit-scrollbar{width:0}
+
+body{
+  background:var(--ink-050);
+  color:var(--t1);
+  font-family:'Hind Siliguri',sans-serif;
+  line-height:1.95;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  cursor:none;
+}
+@media (hover:none),(pointer:coarse){body{cursor:auto}}
+
+::selection{background:rgba(217,173,99,.22);color:#fff}
+
+/* ───────── ambient layers ───────── */
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+.aura{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(60% 45% at 18% 12%,rgba(217,173,99,.055),transparent 70%),
+    radial-gradient(55% 50% at 84% 72%,rgba(159,143,192,.045),transparent 70%),
+    radial-gradient(70% 40% at 50% 115%,rgba(201,154,168,.035),transparent 70%);
+}
+.bloom{
+  position:fixed;border-radius:50%;filter:blur(120px);
+  pointer-events:none;z-index:0;will-change:transform;
+}
+.bloom.b1{width:52vw;height:52vw;max-width:620px;max-height:620px;background:rgba(217,173,99,.05);top:-8%;left:-12%;animation:drift 38s var(--ease) infinite}
+.bloom.b2{width:44vw;height:44vw;max-width:520px;max-height:520px;background:rgba(159,143,192,.045);top:46%;right:-14%;animation:drift 38s var(--ease) infinite -13s}
+.bloom.b3{width:38vw;height:38vw;max-width:440px;max-height:440px;background:rgba(201,154,168,.035);bottom:-6%;left:32%;animation:drift 38s var(--ease) infinite -26s}
+@keyframes drift{
+  0%,100%{transform:translate3d(0,0,0) scale(1)}
+  33%{transform:translate3d(46px,-34px,0) scale(1.07)}
+  66%{transform:translate3d(-34px,44px,0) scale(.94)}
+}
+
+/* film grain + vignette — gives it that printed-paper feel */
+.grain{
+  position:fixed;inset:-120px;z-index:60;pointer-events:none;opacity:.028;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  animation:grainShift .7s steps(3) infinite;
+}
+@keyframes grainShift{
+  0%{transform:translate(0,0)}33%{transform:translate(-14px,9px)}66%{transform:translate(11px,-12px)}100%{transform:translate(0,0)}
+}
+.vignette{
+  position:fixed;inset:0;z-index:59;pointer-events:none;
+  background:radial-gradient(ellipse 110% 85% at 50% 45%,transparent 40%,rgba(0,0,0,.55) 100%);
+}
+
+/* ───────── cursor ───────── */
+#glow{
+  position:fixed;top:0;left:0;width:280px;height:280px;margin:-140px 0 0 -140px;
+  border-radius:50%;z-index:58;pointer-events:none;mix-blend-mode:screen;
+  background:radial-gradient(circle,rgba(217,173,99,.085),transparent 62%);
+  opacity:0;transition:opacity .5s;will-change:transform;
+}
+#dot{
+  position:fixed;top:0;left:0;width:6px;height:6px;margin:-3px 0 0 -3px;z-index:62;
+  border-radius:50%;background:var(--gold-soft);pointer-events:none;opacity:0;
+  box-shadow:0 0 12px rgba(217,173,99,.7);
+  transition:opacity .4s,transform .22s var(--ease);will-change:transform;
+}
+#dot.wide{transform:scale(3.4);background:transparent;border:1px solid var(--gold);box-shadow:none}
+@media (hover:none),(pointer:coarse){#glow,#dot{display:none}}
+
+/* ───────── loader ───────── */
+#veil{
+  position:fixed;inset:0;z-index:999;background:var(--ink-000);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  transition:opacity 1.1s var(--ease),visibility 1.1s;
+}
+#veil.lift{opacity:0;visibility:hidden;pointer-events:none}
+#veil .arc{width:56px;height:56px}
+#veil .arc circle{fill:none;stroke-width:1.1}
+#veil .arc .bg{stroke:rgba(255,255,255,.05)}
+#veil .arc .fg{stroke:var(--gold);stroke-linecap:round;stroke-dasharray:163;stroke-dashoffset:163;transition:stroke-dashoffset .5s var(--ease);transform:rotate(-90deg);transform-origin:center}
+#veil .bism{font-family:'Amiri',serif;font-size:1.25rem;color:var(--gold);letter-spacing:1px;opacity:.75}
+#veil .pct{font-family:'Outfit';font-size:10px;letter-spacing:5px;color:var(--t3)}
+
+/* ───────── scroll rail ───────── */
+#rail{
+  position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:40;
+  display:flex;flex-direction:column;gap:20px;align-items:flex-end;
+}
+#rail a{
+  display:flex;align-items:center;gap:11px;text-decoration:none;
+  font-family:'Outfit';font-size:9.5px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--t3);transition:color .45s var(--ease);
+}
+#rail a .tick{width:14px;height:1px;background:currentColor;transition:width .5s var(--ease),background .45s}
+#rail a .nm{opacity:0;transform:translateX(6px);transition:opacity .45s var(--ease),transform .45s var(--ease);white-space:nowrap;order:-1}
+#rail a:hover,#rail a.on{color:var(--gold)}
+#rail a:hover .nm,#rail a.on .nm{opacity:1;transform:translateX(0)}
+#rail a.on .tick{width:30px}
+@media(max-width:1080px){#rail{display:none}}
+
+#bar{position:fixed;left:0;top:0;height:1px;z-index:70;width:0;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold-soft));box-shadow:0 0 10px rgba(217,173,99,.5)}
+
+/* ───────── layout ───────── */
+main{position:relative;z-index:2}
+.sec{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:clamp(80px,12vh,140px) clamp(18px,5vw,40px);position:relative;
+}
+.wrap{width:100%;max-width:720px;margin:0 auto}
+.wrap.narrow{max-width:620px}
+
+/* ───────── shared type ───────── */
+.kicker{
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-family:'Outfit';font-size:9.5px;font-weight:500;
+  letter-spacing:5.5px;text-transform:uppercase;color:var(--gold);
+  margin-bottom:22px;opacity:.85;
+}
+.kicker::before,.kicker::after{content:'';width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--gold-deep))}
+.kicker::after{background:linear-gradient(90deg,var(--gold-deep),transparent)}
+
+.h2{
+  font-size:clamp(1.55rem,4vw,2.3rem);font-weight:600;
+  text-align:center;line-height:1.45;letter-spacing:-.2px;margin-bottom:14px;
+}
+.lede{
+  text-align:center;color:var(--t2);font-weight:300;
+  font-size:clamp(.92rem,2vw,1rem);line-height:2.05;
+  max-width:460px;margin:0 auto;
+}
+
+/* ornamental rule — drawn, not imported */
+.rule{display:block;margin:26px auto 48px;width:120px;height:18px;overflow:visible}
+.rule path,.rule line{fill:none;stroke:var(--gold);stroke-width:1;opacity:.55}
+.rule .d{fill:var(--gold);stroke:none;opacity:.9}
+
+/* ───────── panel (the glass) ───────── */
+.panel{
+  position:relative;border-radius:2px;
+  background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.009));
+  border:1px solid var(--hair);
+  backdrop-filter:blur(26px) saturate(115%);
+  -webkit-backdrop-filter:blur(26px) saturate(115%);
+  transition:border-color .7s var(--ease),transform .7s var(--ease),box-shadow .7s var(--ease);
+  will-change:transform;
+}
+.panel::before{
+  content:'';position:absolute;left:12%;right:12%;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(217,173,99,.38),transparent);
+}
+.panel:hover{border-color:rgba(217,173,99,.2);box-shadow:0 36px 90px -30px rgba(0,0,0,.75),0 0 60px -30px rgba(217,173,99,.3)}
+
+/* hand-drawn corner flourishes */
+.corner{position:absolute;width:26px;height:26px;opacity:.42;pointer-events:none}
+.corner path{fill:none;stroke:var(--gold);stroke-width:1}
+.c-tl{top:9px;left:9px}
+.c-tr{top:9px;right:9px;transform:scaleX(-1)}
+.c-bl{bottom:9px;left:9px;transform:scaleY(-1)}
+.c-br{bottom:9px;right:9px;transform:scale(-1)}
+
+/* ═════════ HERO ═════════ */
+#hero{min-height:100svh;text-align:center;overflow:hidden}
+.hero-in{position:relative;z-index:3;will-change:transform,opacity}
+
+.moon{width:96px;height:96px;margin:0 auto 38px;position:relative}
+.moon svg{width:100%;height:100%;overflow:visible}
+.moon .cr{fill:none;stroke:var(--gold);stroke-width:1.1;filter:drop-shadow(0 0 10px rgba(217,173,99,.5))}
+.moon .orbit{fill:none;stroke:rgba(255,255,255,.07);stroke-width:.6}
+.moon .spark{fill:var(--gold-soft);filter:drop-shadow(0 0 6px var(--gold))}
+.moon .rot{transform-origin:48px 48px;animation:slowspin 22s linear infinite}
+@keyframes slowspin{to{transform:rotate(360deg)}}
+.moon::after{
+  content:'';position:absolute;inset:-34px;border-radius:50%;
+  background:radial-gradient(circle,rgba(217,173,99,.1),transparent 65%);
+  animation:breathe 6s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+
+.salam{font-family:'Amiri',serif;font-size:1.05rem;color:var(--gold);letter-spacing:1px;margin-bottom:28px;opacity:.8}
+
+h1{
+  font-family:'Outfit',sans-serif;font-weight:200;
+  font-size:clamp(2.6rem,9vw,5.4rem);line-height:1.03;letter-spacing:-2.5px;
+  margin-bottom:26px;
+}
+h1 .line{display:block;overflow:hidden}
+h1 .line > span{display:block;transform:translateY(105%);transition:transform 1.3s var(--ease)}
+.ready h1 .line > span{transform:translateY(0)}
+h1 .line:nth-child(2) > span{transition-delay:.11s}
+h1 em{
+  font-style:normal;font-weight:600;
+  background:linear-gradient(104deg,#fff 8%,var(--gold-soft) 46%,var(--gold-deep) 92%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+.hero-sub{
+  color:var(--t2);font-weight:300;max-width:440px;margin:0 auto;
+  font-size:clamp(.94rem,2.2vw,1.05rem);line-height:2.15;
+}
+.hero-time{
+  margin-top:26px;font-family:'Outfit';font-size:10px;letter-spacing:3.4px;
+  text-transform:uppercase;color:var(--t3);
+}
+.hero-time b{color:var(--gold);font-weight:500}
+
+.cue{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  font-family:'Outfit';font-size:9px;letter-spacing:3.5px;text-transform:uppercase;color:var(--t3);
+}
+.cue .track{width:1px;height:46px;background:rgba(255,255,255,.08);overflow:hidden;position:relative}
+.cue .track::after{
+  content:'';position:absolute;top:-46px;left:0;width:1px;height:46px;
+  background:linear-gradient(180deg,transparent,var(--gold));
+  animation:fall 2.4s cubic-bezier(.6,0,.4,1) infinite;
+}
+@keyframes fall{0%{top:-46px}60%,100%{top:46px}}
+
+/* ═════════ word-by-word reveal ═════════ */
+.split .w{display:inline-block;opacity:0;transform:translateY(16px);filter:blur(5px);
+  transition:opacity .85s var(--ease),transform .85s var(--ease),filter .85s var(--ease)}
+.split.in .w{opacity:1;transform:translateY(0);filter:blur(0)}
+
+/* ═════════ INTENTION ═════════ */
+.niyyah{
+  font-size:clamp(1.05rem,2.7vw,1.35rem);font-weight:300;line-height:2.25;
+  text-align:center;color:rgba(255,255,255,.72);
+}
+.niyyah b{color:var(--gold-soft);font-weight:500}
+
+/* ═════════ MAIN DUA ═════════ */
+.scroll-panel{padding:clamp(44px,7vw,76px) clamp(26px,5.5vw,62px)}
+.bism{
+  font-family:'Amiri',serif;direction:rtl;
+  font-size:clamp(1.5rem,5vw,2.1rem);color:var(--gold);line-height:1.7;
+  text-align:center;margin-bottom:10px;
+}
+.bism-tr{
+  text-align:center;font-family:'Outfit';font-size:9px;letter-spacing:4px;
+  text-transform:uppercase;color:var(--t3);margin-bottom:40px;
+}
+.dua-body{
+  font-size:clamp(1rem,2.4vw,1.1rem);line-height:2.5;
+  color:rgba(255,255,255,.76);font-weight:400;
+}
+.dua-body p + p{margin-top:1.5em}
+.dua-body .g{color:var(--gold-soft);font-weight:500}
+.dua-body .r{color:var(--rose);font-weight:500}
+.dua-body .first::first-letter{
+  font-family:'Amiri',serif;font-size:2.9em;float:left;line-height:.86;
+  padding:.08em .22em 0 0;color:var(--gold);
+}
+.seal{
+  display:block;width:fit-content;margin:48px auto 0;
+  font-family:'Amiri',serif;font-size:1.45rem;color:var(--gold);
+  letter-spacing:5px;padding:13px 40px;border:1px solid rgba(217,173,99,.22);
+  border-radius:60px;background:rgba(217,173,99,.035);
+  transition:background .6s var(--ease),box-shadow .6s var(--ease),letter-spacing .6s var(--ease);
+}
+.seal:hover{background:rgba(217,173,99,.08);box-shadow:0 0 44px -14px rgba(217,173,99,.6);letter-spacing:8px}
+
+/* ═════════ SEVEN DUAS ═════════ */
+.seven{display:flex;flex-direction:column}
+.item{
+  position:relative;padding:clamp(34px,5vw,46px) clamp(4px,3vw,30px) clamp(34px,5vw,46px) 0;
+  border-top:1px solid var(--hair);
+  display:grid;grid-template-columns:88px 1fr;gap:clamp(14px,3vw,34px);align-items:start;
+}
+.item:last-child{border-bottom:1px solid var(--hair)}
+.item .idx{
+  font-family:'Amiri',serif;font-size:clamp(1.5rem,4vw,2rem);color:var(--gold-deep);
+  line-height:1;padding-top:4px;transition:color .6s var(--ease),transform .6s var(--ease);
+  position:relative;
+}
+.item .idx::after{
+  content:'';position:absolute;left:2px;bottom:-14px;width:0;height:1px;
+  background:var(--gold);transition:width .7s var(--ease);
+}
+.item:hover .idx{color:var(--gold)}
+.item:hover .idx::after{width:46px}
+.item .tag{
+  font-family:'Outfit';font-size:9px;letter-spacing:3.6px;text-transform:uppercase;
+  color:var(--t3);margin-bottom:12px;transition:color .6s;
+}
+.item:hover .tag{color:var(--gold-deep)}
+.item h3{font-size:clamp(1.04rem,2.6vw,1.2rem);font-weight:600;margin-bottom:14px;line-height:1.6}
+.item p{font-size:.96rem;color:var(--t2);line-height:2.15;font-weight:300}
+.item p .g{color:var(--gold-soft);font-weight:500}
+.item p .r{color:var(--rose);font-weight:500}
+.item::before{
+  content:'';position:absolute;left:-28px;right:-28px;top:0;bottom:0;
+  background:radial-gradient(60% 100% at 0% 50%,rgba(217,173,99,.05),transparent 72%);
+  opacity:0;transition:opacity .7s var(--ease);pointer-events:none;border-radius:2px;
+}
+.item:hover::before{opacity:1}
+@media(max-width:600px){
+  .item{grid-template-columns:52px 1fr;gap:12px}
+}
+
+/* ═════════ AYAH ═════════ */
+.ayah{padding:clamp(38px,6vw,56px) clamp(24px,5vw,54px);text-align:center;margin-bottom:20px}
+.ayah .ar{
+  font-family:'Amiri',serif;direction:rtl;
+  font-size:clamp(1.22rem,3.6vw,1.62rem);line-height:2.15;color:var(--gold);
+  margin-bottom:26px;font-weight:400;
+}
+.ayah .orn{display:block;margin:0 auto 22px;width:54px;height:10px}
+.ayah .orn path{fill:none;stroke:var(--gold-deep);stroke-width:1}
+.ayah .orn circle{fill:var(--gold);opacity:.8}
+.ayah .bn{
+  font-size:.97rem;color:rgba(255,255,255,.62);line-height:2.1;font-weight:300;
+  max-width:520px;margin:0 auto;
+}
+.ayah .src{
+  margin-top:20px;font-family:'Outfit';font-size:9px;letter-spacing:3.4px;
+  text-transform:uppercase;color:var(--t3);
+}
+
+/* ═════════ TASBIH ═════════ */
+.tasbih{text-align:center;padding:clamp(40px,6vw,62px) 24px}
+.bead-wrap{position:relative;width:188px;height:188px;margin:0 auto 30px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.bead-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.bead-wrap .track{fill:none;stroke:rgba(255,255,255,.05);stroke-width:1.2}
+.bead-wrap .fill{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-linecap:round;
+  stroke-dasharray:largest;transition:stroke-dashoffset .55s var(--ease);
+  filter:drop-shadow(0 0 7px rgba(217,173,99,.55))}
+.bead-core{
+  position:absolute;inset:34px;border-radius:50%;
+  background:radial-gradient(circle at 36% 30%,rgba(217,173,99,.14),rgba(255,255,255,.015) 65%);
+  border:1px solid rgba(217,173,99,.16);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  transition:transform .35s var(--ease),box-shadow .5s var(--ease),border-color .5s;
+}
+.bead-wrap:active .bead-core{transform:scale(.93)}
+.bead-wrap:hover .bead-core{box-shadow:0 0 50px -14px rgba(217,173,99,.55);border-color:rgba(217,173,99,.3)}
+.bead-core .n{font-family:'Outfit';font-size:2.5rem;font-weight:200;color:var(--gold-soft);line-height:1;letter-spacing:-1px}
+.bead-core .of{font-family:'Outfit';font-size:9px;letter-spacing:3.4px;color:var(--t3);text-transform:uppercase}
+.tasbih .dhikr{font-family:'Amiri',serif;font-size:1.3rem;color:var(--gold);margin-bottom:8px;direction:rtl}
+.tasbih .dhikr-bn{font-size:.9rem;color:var(--t2);font-weight:300;margin-bottom:22px}
+.tasbih .note{font-size:.88rem;color:var(--t3);font-weight:300;max-width:380px;margin:22px auto 0;line-height:2}
+.tasbih .note.done{color:var(--gold-soft)}
+
+/* ═════════ CLOSING ═════════ */
+.closing{text-align:center;padding:clamp(48px,7vw,78px) clamp(24px,5vw,54px)}
+.closing .lamp{
+  width:50px;height:50px;margin:0 auto 28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:19px;
+  border:1px solid rgba(217,173,99,.18);background:rgba(217,173,99,.04);position:relative;
+}
+.closing .lamp::after{
+  content:'';position:absolute;inset:-12px;border-radius:50%;
+  background:radial-gradient(circle,rgba(217,173,99,.1),transparent 68%);
+  animation:breathe 5s ease-in-out infinite;
+}
+.closing p{font-size:1rem;color:var(--t2);line-height:2.25;font-weight:300;max-width:470px;margin:0 auto}
+.closing .sig{
+  display:block;margin-top:30px;font-family:'Outfit';font-size:9px;
+  letter-spacing:5px;text-transform:uppercase;color:var(--t3);
+}
+
+/* ═════════ FOOTER ═════════ */
+footer{padding:0 24px 56px;text-align:center;position:relative;z-index:2}
+.up{
+  display:inline-flex;align-items:center;gap:9px;padding:12px 26px;border-radius:60px;
+  border:1px solid var(--hair);background:rgba(255,255,255,.012);color:var(--t3);
+  font-family:'Outfit';font-size:9.5px;letter-spacing:2.6px;text-transform:uppercase;
+  text-decoration:none;transition:all .5s var(--ease);
+}
+.up:hover{color:var(--gold);border-color:rgba(217,173,99,.24);background:rgba(217,173,99,.04)}
+.foot-note{margin-top:26px;font-family:'Outfit';font-size:9px;letter-spacing:2.6px;color:rgba(255,255,255,.1);text-transform:uppercase}
+
+/* ═════════ sound toggle ═════════ */
+#snd{
+  position:fixed;left:24px;bottom:24px;z-index:45;
+  width:40px;height:40px;border-radius:50%;cursor:pointer;
+  border:1px solid var(--hair);background:rgba(5,4,6,.6);backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;gap:2px;
+  transition:border-color .5s,background .5s;
+}
+#snd:hover{border-color:rgba(217,173,99,.3)}
+#snd i{display:block;width:1.5px;height:7px;background:var(--t3);border-radius:2px;transition:background .4s}
+#snd.on i{background:var(--gold)}
+#snd.on i:nth-child(1){animation:eq .9s ease-in-out infinite}
+#snd.on i:nth-child(2){animation:eq .9s ease-in-out infinite .18s}
+#snd.on i:nth-child(3){animation:eq .9s ease-in-out infinite .36s}
+@keyframes eq{0%,100%{height:5px}50%{height:14px}}
+@media(max-width:600px){#snd{left:16px;bottom:16px;width:36px;height:36px}}
+
+/* ═════════ reveal ═════════ */
+.rv{opacity:0;transform:translateY(42px);
+  transition:opacity var(--slow) var(--ease),transform var(--slow) var(--ease)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}.d7{transition-delay:.56s}
+
+/* click sparks */
+.spark-el{position:fixed;z-index:80;pointer-events:none;font-family:'Amiri',serif;
+  color:var(--gold);animation:sparkOut 1.25s var(--ease) forwards}
+@keyframes sparkOut{
+  0%{opacity:.95;transform:translate(0,0) scale(.6)}
+  100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.1)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important}
+  .rv{opacity:1;transform:none}
+  h1 .line > span{transform:none}
+  .split .w{opacity:1;transform:none;filter:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ loader ══ -->
+<div id="veil">
+  <svg class="arc" viewBox="0 0 56 56"><circle class="bg" cx="28" cy="28" r="26"/><circle class="fg" cx="28" cy="28" r="26"/></svg>
+  <div class="bism">بِسْمِ اللهِ</div>
+  <div class="pct" id="pct">0</div>
+</div>
+
+<div id="bar"></div>
+<canvas id="stars"></canvas>
+<div class="aura"></div>
+<div class="bloom b1"></div>
+<div class="bloom b2"></div>
+<div class="bloom b3"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div id="glow"></div>
+<div id="dot"></div>
+
+<nav id="rail">
+  <a href="#hero"><span class="nm">শুরু</span><span class="tick"></span></a>
+  <a href="#niyyah"><span class="nm">নিয়ত</span><span class="tick"></span></a>
+  <a href="#dua"><span class="nm">দোয়া</span><span class="tick"></span></a>
+  <a href="#seven"><span class="nm">সাতটি চাওয়া</span><span class="tick"></span></a>
+  <a href="#ayah"><span class="nm">কুরআন</span><span class="tick"></span></a>
+  <a href="#tasbih"><span class="nm">তাসবিহ</span><span class="tick"></span></a>
+  <a href="#end"><span class="nm">শেষ</span><span class="tick"></span></a>
+</nav>
+
+<div id="snd" title="নীরব আবহ"><i></i><i></i><i></i></div>
+
+<main>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="sec" id="hero">
+  <div class="hero-in" id="heroIn">
+
+    <div class="moon rv">
+      <svg viewBox="0 0 96 96">
+        <circle class="orbit" cx="48" cy="48" r="43"/>
+        <path class="cr" d="M60 20a30 30 0 1 0 0 56 24 24 0 1 1 0-56z"/>
+        <g class="rot"><circle class="spark" cx="48" cy="5" r="2.1"/></g>
+      </svg>
+    </div>
+
+    <div class="salam rv d1">ٱلسَّلَامُ عَلَيْكُمْ</div>
+
+    <h1>
+      <span class="line"><span>শুধু কিছু</span></span>
+      <span class="line"><span><em>দোয়া</em></span></span>
+    </h1>
+
+    <p class="hero-sub rv d3">
+      আর কিছু না। কোনো উপহার না, কোনো কথা না।<br>
+      তোমার জন্য যে দোয়াগুলো করি — সেগুলোই এখানে রেখে গেলাম।
+    </p>
+
+    <div class="hero-time rv d4" id="clock">· <b>—</b> ·</div>
+  </div>
+
+  <div class="cue"><span>স্ক্রল</span><span class="track"></span></div>
+</section>
+
+<!-- ══════════ NIYYAH ══════════ -->
+<section class="sec" id="niyyah">
+  <div class="wrap narrow">
+    <div class="kicker rv">নিয়ত</div>
+    <svg class="rule rv d1" viewBox="0 0 120 18">
+      <line x1="0" y1="9" x2="42" y2="9"/>
+      <path d="M48 9c0-5 4-5 6-2.5S58 14 60 14s4-5 6-7.5S72 4 72 9"/>
+      <circle class="d" cx="60" cy="9" r="1.4"/>
+      <line x1="78" y1="9" x2="120" y2="9"/>
+    </svg>
+    <p class="niyyah split rv d2" data-split>
+      দোয়া এমন একটা জিনিস — যেটা করতে কাউকে জানাতে হয় না। চুপচাপ করা যায়, রাতের অন্ধকারে, কারো সামনে হাত না তুলেও। কিন্তু আজ মনে হলো, <b>তোমার জানা উচিত</b> — এই দোয়াগুলো সত্যিই করা হয়। প্রতিদিন।
+    </p>
+  </div>
+</section>
+
+<!-- ══════════ MAIN DUA ══════════ -->
+<section class="sec" id="dua">
+  <div class="wrap">
+    <div class="kicker rv">প্রধান দোয়া</div>
+    <h2 class="h2 rv d1">আল্লাহ তাআলার দরবারে</h2>
+    <p class="lede rv d2">হাত তুলে যা বলি — অবিকল সেটাই।</p>
+    <svg class="rule rv d2" viewBox="0 0 120 18">
+      <line x1="0" y1="9" x2="46" y2="9"/><circle class="d" cx="54" cy="9" r="1.3"/>
+      <circle class="d" cx="60" cy="9" r="2"/><circle class="d" cx="66" cy="9" r="1.3"/>
+      <line x1="74" y1="9" x2="120" y2="9"/>
+    </svg>
+
+    <article class="panel scroll-panel rv d3">
+      <svg class="corner c-tl" viewBox="0 0 26 26"><path d="M1 26V9C1 4.6 4.6 1 9 1h17"/><path d="M6 26V11c0-3 2-5 5-5h15"/></svg>
+      <svg class="corner c-tr" viewBox="0 0 26 26"><path d="M1 26V9C1 4.6 4.6 1 9 1h17"/><path d="M6 26V11c0-3 2-5 5-5h15"/></svg>
+      <svg class="corner c-bl" viewBox="0 0 26 26"><path d="M1 26V9C1 4.6 4.6 1 9 1h17"/><path d="M6 26V11c0-3 2-5 5-5h15"/></svg>
+      <svg class="corner c-br" viewBox="0 0 26 26"><path d="M1 26V9C1 4.6 4.6 1 9 1h17"/><path d="M6 26V11c0-3 2-5 5-5h15"/></svg>
+
+      <div class="bism">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <div class="bism-tr">পরম করুণাময় আল্লাহর নামে</div>
+
+      <div class="dua-body">
+        <p class="first">ইয়া আল্লাহ — তুমি রহমান, তুমি রহীম। তুমি জানো আমি কার কথা বলছি। নাম না বললেও তুমি জানো।</p>
+
+        <p>ওকে <span class="g">ভালো রেখো</span>। শুধু বাইরে থেকে ভালো না — ভেতর থেকে। ওর বুকের ভেতর সেই প্রশান্তিটা দাও, যেটা দুনিয়ার কোনো মানুষ, কোনো পরিস্থিতি কেড়ে নিতে পারে না।</p>
+
+        <p>ওর শরীরকে <span class="g">সুস্থ</span> রাখো। ওর মনকে <span class="g">হালকা</span> রাখো। ওর রিযিকে <span class="g">বারাকাহ</span> দাও — যতটুকু দাও, তাতেই যেন ও তৃপ্ত থাকে, আর কখনো যেন কারো কাছে হাত পাততে না হয়।</p>
+
+        <p>ও যখন একা লাগবে — তুমি ওর পাশে থেকো। ও যখন রাতে চুপচাপ কাঁদবে আর কেউ জানবে না — তুমি জানবে, আর তুমি ওকে ধরে রেখো। ও যখন ভেঙে পড়বে — তুমি তুলে দিও, কারণ তুমি ছাড়া আর কেউ সত্যিকার অর্থে পারে না।</p>
+
+        <p>আর ইয়া রাব্বি — যখন সময় হবে, ওকে এমন একজন জীবনসঙ্গী দিও <span class="r">যে ওকে সত্যিই বোঝে</span>। যে ওর চুপ থাকাটাও পড়তে পারবে। যে ওর রাগটা সামলাবে, ওর স্বপ্নটাকে নিজের বানাবে, আর ওকে <span class="r">সারাজীবন সম্মানে রাখবে</span> — শুধু ভালো দিনে না, খারাপ দিনেও।</p>
+
+        <p>ওকে বদনজর থেকে, হিংসা থেকে, খারাপ মানুষ আর খারাপ সময় থেকে <span class="g">হেফাজত</span> করো। ওর চারপাশে তোমার সুরক্ষা এমনভাবে রাখো — যেমন মায়ের কোল বাচ্চাকে ঘিরে রাখে।</p>
+
+        <p>আর সবশেষে — ওকে দুনিয়ায় কল্যাণ দাও, আখিরাতে কল্যাণ দাও, আর জাহান্নামের আগুন থেকে বাঁচাও।</p>
+      </div>
+
+      <div class="seal" id="seal">آمِين</div>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ SEVEN ══════════ -->
+<section class="sec" id="seven">
+  <div class="wrap">
+    <div class="kicker rv">আলাদা করে</div>
+    <h2 class="h2 rv d1">সাতটি চাওয়া</h2>
+    <p class="lede rv d2">কিছু জিনিস আলাদা করে নাম ধরে চাইতে হয়।</p>
+    <svg class="rule rv d2" viewBox="0 0 120 18">
+      <line x1="0" y1="9" x2="48" y2="9"/><path d="M52 9l8-5 8 5-8 5z" fill="none" stroke="currentColor"/>
+      <line x1="72" y1="9" x2="120" y2="9"/>
+    </svg>
+
+    <div class="seven">
+
+      <div class="item rv d1">
+        <div class="idx">٠١</div>
+        <div>
+          <div class="tag">সুস্থতা</div>
+          <h3>ওর শরীর আর মনের জন্য</h3>
+          <p>ইয়া আল্লাহ, ওকে <span class="g">শারীরিক ও মানসিক সুস্থতা</span> দাও। যে ব্যথাগুলো ও কাউকে বলে না, সেগুলোও তুমি সারিয়ে দাও। ও যেন প্রতিটা সকালে হালকা মনে উঠতে পারে, আর প্রতিটা রাতে নিশ্চিন্তে ঘুমাতে পারে।</p>
+        </div>
+      </div>
+
+      <div class="item rv d2">
+        <div class="idx">٠٢</div>
+        <div>
+          <div class="tag">পরিশ্রম</div>
+          <h3>ওর পড়ালেখা, কাজ আর স্বপ্নগুলোর জন্য</h3>
+          <p>ইয়া রাব্বি, ওর প্রতিটা চেষ্টায় <span class="g">বারাকাহ</span> দাও। ও যা চায় — যদি সেটা ওর জন্য কল্যাণকর হয়, তবে সহজ করে দাও। আর যদি না হয়, তবে ওকে তার চেয়ে ভালো কিছু দাও, এবং ওর মনকে সেটা মেনে নেওয়ার শক্তি দাও।</p>
+        </div>
+      </div>
+
+      <div class="item rv d3">
+        <div class="idx">٠٣</div>
+        <div>
+          <div class="tag">পরিবার</div>
+          <h3>ওর আপনজনদের জন্য</h3>
+          <p>ওর বাবা-মাকে সুস্থতা আর দীর্ঘ হায়াত দাও। ওদের ঘরে <span class="g">শান্তি</span> দাও। ওকে কখনো যেন তাদের নিয়ে ভয় পেতে না হয়। আর ওকে এমন সন্তান বানাও — যার জন্য বাবা-মা আখিরাতেও উপকৃত হয়।</p>
+        </div>
+      </div>
+
+      <div class="item rv d4">
+        <div class="idx">٠٤</div>
+        <div>
+          <div class="tag">হেফাজত</div>
+          <h3>সব অকল্যাণ থেকে</h3>
+          <p>ওকে <span class="g">বদনজর</span>, হিংসা, জাদু, মিথ্যা মানুষ আর বিশ্বাসঘাতকতা থেকে রক্ষা করো। ও যেখানেই থাকুক, যত দূরেই যাক — তোমার হেফাজত যেন ওর আগে গিয়ে পৌঁছায়।</p>
+        </div>
+      </div>
+
+      <div class="item rv d5">
+        <div class="idx">٠٥</div>
+        <div>
+          <div class="tag">জীবনসঙ্গী</div>
+          <h3>ওর সেই মানুষটার জন্য</h3>
+          <p>ইয়া রাব্বুল আলামীন, ওর জন্য এমন একজন <span class="r">দ্বীনদার, নরম মনের, দায়িত্ববান</span> সঙ্গী নির্ধারণ করো — যে ওকে কখনো কাঁদাবে না। যে ওর হাত ধরে জান্নাতের দিকে হাঁটবে। যে ওকে এমন ভালোবাসবে, যেন ও আর কখনো নিজেকে প্রশ্ন না করে — "আমি কি যথেষ্ট?"</p>
+        </div>
+      </div>
+
+      <div class="item rv d6">
+        <div class="idx">٠٦</div>
+        <div>
+          <div class="tag">ঈমান</div>
+          <h3>ওর অন্তরের আলোর জন্য</h3>
+          <p>ওর হৃদয়কে <span class="g">তোমার মহব্বতে</span> ভরে দাও। ওর ঈমানকে এতটা মজবুত করো যেন দুনিয়ার কোনো কষ্ট, কোনো মানুষ ওকে তোমার থেকে এক ইঞ্চিও দূরে সরাতে না পারে। ওর নামাজ কবুল করো, ওর নীরব দোয়াগুলোও কবুল করো।</p>
+        </div>
+      </div>
+
+      <div class="item rv d7">
+        <div class="idx">٠٧</div>
+        <div>
+          <div class="tag">আখিরাত</div>
+          <h3>সবকিছুর পরে — জান্নাত</h3>
+          <p>দুনিয়ার সব চাওয়ার শেষে আসল চাওয়া এটাই। হাশরের ময়দানে ওকে তোমার আরশের ছায়ায় রেখো। ওর হিসাব সহজ করো। আর ওকে <span class="g">জান্নাতুল ফিরদাউস</span> দান করো — যেখানে আর কোনো কান্না নেই, কোনো ভয় নেই, কোনো বিদায় নেই।</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AYAH ══════════ -->
+<section class="sec" id="ayah">
+  <div class="wrap">
+    <div class="kicker rv">কুরআন থেকে</div>
+    <h2 class="h2 rv d1">EIGULO PORBA</h2>
+    <p class="lede rv d2">আমার শব্দ ফুরিয়ে গেলে — এগুলো বলি।</p>
+    <svg class="rule rv d2" viewBox="0 0 120 18">
+      <line x1="0" y1="9" x2="50" y2="9"/><circle class="d" cx="60" cy="9" r="2.4"/>
+      <circle cx="60" cy="9" r="5" fill="none" stroke="currentColor"/>
+      <line x1="70" y1="9" x2="120" y2="9"/>
+    </svg>
+
+    <article class="panel ayah rv d3">
+      <svg class="orn" viewBox="0 0 54 10"><path d="M0 5h17"/><circle cx="27" cy="5" r="2.2"/><path d="M20 5l7-4 7 4-7 4z"/><path d="M37 5h17"/></svg>
+      <div class="ar">رَبَّنَآ ءَاتِنَا فِى ٱلدُّنْيَا حَسَنَةً وَفِى ٱلْءَاخِرَةِ حَسَنَةً وَقِنَا عَذَابَ ٱلنَّارِ</div>
+      <p class="bn">"হে আমাদের রব! আমাদের দুনিয়াতে কল্যাণ দাও, আখিরাতেও কল্যাণ দাও, এবং আমাদের জাহান্নামের আযাব থেকে রক্ষা করো।"</p>
+      <div class="src">সূরা আল-বাকারা · ২০১</div>
+    </article>
+
+    <article class="panel ayah rv d4">
+      <svg class="orn" viewBox="0 0 54 10"><path d="M0 5h17"/><circle cx="27" cy="5" r="2.2"/><path d="M20 5l7-4 7 4-7 4z"/><path d="M37 5h17"/></svg>
+      <div class="ar">رَبِّ ٱشْرَحْ لِى صَدْرِى • وَيَسِّرْ لِىٓ أَمْرِى</div>
+      <p class="bn">"হে আমার রব! আমার বুকটা প্রশস্ত করে দাও, আর আমার কাজটা সহজ করে দাও।"</p>
+      <div class="src">সূরা ত্বা-হা · ২৫–২৬</div>
+    </article>
+
+    <article class="panel ayah rv d5">
+      <svg class="orn" viewBox="0 0 54 10"><path d="M0 5h17"/><circle cx="27" cy="5" r="2.2"/><path d="M20 5l7-4 7 4-7 4z"/><path d="M37 5h17"/></svg>
+      <div class="ar">حَسْبُنَا ٱللَّهُ وَنِعْمَ ٱلْوَكِيلُ</div>
+      <p class="bn">"আল্লাহই আমাদের জন্য যথেষ্ট, আর তিনিই উত্তম অভিভাবক।"</p>
+      <div class="src">সূরা আলে-ইমরান · ১৭৩</div>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ TASBIH ══════════ -->
+<section class="sec" id="tasbih">
+  <div class="wrap narrow">
+    <div class="kicker rv">তাসবিহ</div>
+    <h2 class="h2 rv d1">চাইলে তুমিও একটু পড়ো</h2>
+    <p class="lede rv d2">গুটিটায় ট্যাপ করো। ৩৩ বার। তোমার জন্যই।</p>
+    <svg class="rule rv d2" viewBox="0 0 120 18">
+      <line x1="0" y1="9" x2="44" y2="9"/><circle class="d" cx="50" cy="9" r="1.2"/>
+      <circle class="d" cx="56" cy="9" r="1.6"/><circle class="d" cx="63" cy="9" r="2"/>
+      <circle class="d" cx="70" cy="9" r="1.6"/><circle class="d" cx="76" cy="9" r="1.2"/>
+      <line x1="82" y1="9" x2="120" y2="9"/>
+    </svg>
+
+    <article class="panel tasbih rv d3">
+      <div class="bead-wrap" id="bead" role="button" tabindex="0" aria-label="তাসবিহ গণনা">
+        <svg viewBox="0 0 188 188">
+          <circle class="track" cx="94" cy="94" r="86"/>
+          <circle class="fill" id="fill" cx="94" cy="94" r="86"/>
+        </svg>
+        <div class="bead-core">
+          <div class="n" id="cnt">০</div>
+          <div class="of">of ৩৩</div>
+        </div>
+      </div>
+      <div class="dhikr">سُبْحَانَ ٱللَّٰهِ</div>
+      <div class="dhikr-bn">সুবহানাল্লাহ — আল্লাহ সকল ত্রুটি থেকে পবিত্র</div>
+      <p class="note" id="tnote">প্রতিটা ট্যাপ তোমার নামে লেখা থাকুক।</p>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ END ══════════ -->
+<section class="sec" id="end" style="min-height:auto;padding-bottom:40px">
+  <div class="wrap narrow">
+    <article class="panel closing rv">
+      <svg class="corner c-tl" viewBox="0 0 26 26"><path d="M1 26V9C1 4.6 4.6 1 9 1h17"/></svg>
+      <svg class="corner c-br" viewBox="0 0 26 26"><path d="M1 26V9C1 4.6 4.6 1 9 1h17"/></svg>
+      <div class="lamp">🤲</div>
+      <p>
+        এই দোয়াগুলো এই পেজের মধ্যে বন্দী না। ফজরের পর, মাগরিবের ঠিক আগে, আর রাতের শেষ ভাগে — যখন দোয়া ফেরানো হয় না — তখনও তোমার নাম থাকে।
+        <br><br>
+        আল্লাহ কবুল করুন। এটুকুই।
+      </p>
+      <span class="sig">আমীন · ইয়া রাব্বুল আলামীন</span>
+    </article>
+  </div>
+</section>
+
+<footer>
+  <a href="#hero" class="up" id="toTop">↑ শুরুতে ফিরে যাও</a>
+  <div class="foot-note">বানানো হয়েছে নীরবে</div>
+</footer>
+
+</main>
+
+<script>
+(function(){
+'use strict';
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const TOUCH = matchMedia('(hover:none)').matches;
+const bn = n => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+
+/* ───────── loader ───────── */
+(function loader(){
+  const veil = document.getElementById('veil');
+  const fg = veil.querySelector('.fg');
+  const pct = document.getElementById('pct');
+  let p = 0;
+  const tick = setInterval(() => {
+    p += Math.random() * 13 + 5;
+    if (p >= 100) { p = 100; clearInterval(tick); }
+    fg.style.strokeDashoffset = 163 - (163 * p / 100);
+    pct.textContent = bn(Math.round(p));
+    if (p === 100) setTimeout(() => {
+      veil.classList.add('lift');
+      document.body.classList.add('ready');
+    }, 380);
+  }, 130);
+})();
+
+/* ───────── starfield ───────── */
+(function stars(){
+  const cv = document.getElementById('stars');
+  const ctx = cv.getContext('2d', { alpha: true });
+  let W, H, dpr, pts = [];
+  const TINTS = ['217,173,99','232,202,150','159,143,192','201,154,168','255,255,255'];
+
+  function size(){
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.width = innerWidth * dpr;
+    H = cv.height = innerHeight * dpr;
+    cv.style.width = innerWidth + 'px';
+    cv.style.height = innerHeight + 'px';
+    const n = innerWidth < 640 ? 34 : 72;
+    pts = Array.from({length:n}, () => make());
+  }
+  function make(){
+    const depth = Math.random();            // 0 far · 1 near
+    return {
+      x: Math.random()*W, y: Math.random()*H,
+      r: (depth*1.9 + .35) * dpr,
+      vx: (Math.random()-.5) * .16 * dpr * (depth*.8+.3),
+      vy: (-Math.random()*.14 - .02) * dpr * (depth*.8+.3),
+      a: Math.random()*.26 + .04,
+      ph: Math.random()*6.283,
+      sp: Math.random()*.011 + .003,
+      c: TINTS[(Math.random()*TINTS.length)|0],
+      d: depth
+    };
+  }
+  let off = 0;
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for (const p of pts){
+      p.x += p.vx; p.y += p.vy; p.ph += p.sp;
+      if (p.x < -20 || p.x > W+20 || p.y < -20 || p.y > H+20) Object.assign(p, make(), {y: H+10});
+      const a = p.a * (.45 + .55*Math.sin(p.ph));
+      const y = p.y - off * p.d * .35;
+      ctx.beginPath(); ctx.arc(p.x, y, p.r, 0, 6.283);
+      ctx.fillStyle = `rgba(${p.c},${a})`; ctx.fill();
+      if (p.r > 1.4*dpr){
+        ctx.beginPath(); ctx.arc(p.x, y, p.r*4.2, 0, 6.283);
+        ctx.fillStyle = `rgba(${p.c},${a*.1})`; ctx.fill();
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  size(); addEventListener('resize', size, {passive:true});
+  if (!RM) { addEventListener('scroll', () => { off = scrollY * dpr * .12; }, {passive:true}); frame(); }
+  else frame();
+})();
+
+/* ───────── cursor ───────── */
+if (!TOUCH && !RM){
+  const glow = document.getElementById('glow'), dot = document.getElementById('dot');
+  let tx=0, ty=0, gx=0, gy=0, dx=0, dy=0;
+  addEventListener('mousemove', e => {
+    tx = e.clientX; ty = e.clientY;
+    glow.style.opacity = 1; dot.style.opacity = 1;
+  }, {passive:true});
+  addEventListener('mouseleave', () => { glow.style.opacity = 0; dot.style.opacity = 0; });
+  (function loop(){
+    gx += (tx-gx)*.07; gy += (ty-gy)*.07;
+    dx += (tx-dx)*.3;  dy += (ty-dy)*.3;
+    glow.style.transform = `translate3d(${gx}px,${gy}px,0)`;
+    dot.style.transform  = `translate3d(${dx}px,${dy}px,0)` + (dot.classList.contains('wide') ? ' scale(3.4)' : '');
+    requestAnimationFrame(loop);
+  })();
+  document.querySelectorAll('a,.panel,.bead-wrap,#snd,.seal,.item').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>dot.classList.add('wide'));
+    el.addEventListener('mouseleave', ()=>dot.classList.remove('wide'));
+  });
+}
+
+/* ───────── progress + rail ───────── */
+const bar = document.getElementById('bar');
+const links = [...document.querySelectorAll('#rail a')];
+const secs = links.map(a => document.querySelector(a.getAttribute('href')));
+let ticking = false;
+addEventListener('scroll', () => {
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - innerHeight;
+    bar.style.width = (max > 0 ? scrollY/max*100 : 0) + '%';
+    const mid = scrollY + innerHeight*.42;
+    let cur = 0;
+    secs.forEach((s,i)=>{ if (s && s.offsetTop <= mid) cur = i; });
+    links.forEach((a,i)=>a.classList.toggle('on', i===cur));
+    // hero cinematic fade
+    const hi = document.getElementById('heroIn');
+    if (hi && scrollY < innerHeight){
+      const k = scrollY/innerHeight;
+      hi.style.transform = `translateY(${k*-70}px) scale(${1-k*.07})`;
+      hi.style.opacity = String(Math.max(0, 1-k*1.5));
+    }
+    ticking = false;
+  });
+}, {passive:true});
+
+/* parallax blooms */
+if (!RM){
+  const bl = [...document.querySelectorAll('.bloom')];
+  let t2 = false;
+  addEventListener('scroll', ()=>{
+    if (t2) return; t2 = true;
+    requestAnimationFrame(()=>{
+      const s = scrollY, f = [.028,.019,.013];
+      bl.forEach((b,i)=> b.style.transform = `translate3d(0,${s*f[i]}px,0)`);
+      t2 = false;
+    });
+  }, {passive:true});
+}
+
+/* ───────── split text ───────── */
+document.querySelectorAll('[data-split]').forEach(el=>{
+  const html = el.innerHTML;
+  const tmp = document.createElement('div'); tmp.innerHTML = html;
+  const walk = node => {
+    [...node.childNodes].forEach(n=>{
+      if (n.nodeType === 3){
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(w=>{
+          if (!w.trim()) { frag.appendChild(document.createTextNode(w)); return; }
+          const s = document.createElement('span'); s.className='w'; s.textContent=w;
+          frag.appendChild(s);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1) walk(n);
+    });
+  };
+  walk(tmp);
+  el.innerHTML = tmp.innerHTML;
+  [...el.querySelectorAll('.w')].forEach((w,i)=> w.style.transitionDelay = (i*34)+'ms');
+});
+
+/* ───────── reveal ───────── */
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if (!e.isIntersecting) return;
+    e.target.classList.add('in');
+    io.unobserve(e.target);
+  });
+}, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv,.split').forEach(el=>io.observe(el));
+
+/* ───────── panel tilt ───────── */
+if (!TOUCH && !RM){
+  document.querySelectorAll('.panel').forEach(p=>{
+    p.addEventListener('mousemove', e=>{
+      const r = p.getBoundingClientRect();
+      const x = (e.clientX-r.left)/r.width - .5;
+      const y = (e.clientY-r.top)/r.height - .5;
+      p.style.transform = `perspective(1100px) rotateX(${-y*2.4}deg) rotateY(${x*2.4}deg) translateY(-3px)`;
+    });
+    p.addEventListener('mouseleave', ()=>{ p.style.transform=''; });
+  });
+}
+
+/* ───────── time-aware line ───────── */
+(function clock(){
+  const h = new Date().getHours();
+  let when, line;
+  if (h>=4 && h<6)       { when='ফজরের সময়';  line='এখন দোয়া ফেরানো হয় না'; }
+  else if (h<12)         { when='সকাল';        line='দিনটা তোমার জন্য সহজ হোক'; }
+  else if (h<16)         { when='দুপুর';        line='একটু পানি খেয়ে নিও'; }
+  else if (h<18)         { when='আসরের সময়';  line='দিনটা কেমন গেল?'; }
+  else if (h<20)         { when='মাগরিব';      line='দোয়ার সবচেয়ে ভালো সময়'; }
+  else if (h<24)         { when='রাত';          line='তাড়াতাড়ি ঘুমাও'; }
+  else                   { when='গভীর রাত';    line='তাহাজ্জুদের সময় কাছেই'; }
+  document.getElementById('clock').innerHTML = `· <b>${when}</b> · ${line} ·`;
+})();
+
+/* ───────── tasbih ───────── */
+(function tasbih(){
+  const bead = document.getElementById('bead');
+  const fill = document.getElementById('fill');
+  const cnt  = document.getElementById('cnt');
+  const note = document.getElementById('tnote');
+  const R = 86, C = 2*Math.PI*R, TOTAL = 33;
+  fill.style.strokeDasharray = C;
+  fill.style.strokeDashoffset = C;
+  let n = 0;
+
+  const notes = [
+    'প্রতিটা ট্যাপ তোমার নামে লেখা থাকুক।',
+    'চলতে থাকো... ঠোঁট নাড়তেও পারো।',
+    'অর্ধেক হয়ে গেছে। থেমো না।',
+    'আর একটু বাকি।',
+    'আলহামদুলিল্লাহ — ৩৩ পূর্ণ। আল্লাহ কবুল করুন।'
+  ];
+
+  function hit(){
+    if (n >= TOTAL){ n = 0; note.classList.remove('done'); }
+    n++;
+    cnt.textContent = bn(n);
+    fill.style.strokeDashoffset = C - (C * n / TOTAL);
+    const i = n===TOTAL ? 4 : n>28 ? 3 : n>16 ? 2 : n>3 ? 1 : 0;
+    note.textContent = notes[i];
+    note.classList.toggle('done', n===TOTAL);
+    if (navigator.vibrate) navigator.vibrate(n===TOTAL ? [18,40,18] : 8);
+    chime(n===TOTAL);
+  }
+  bead.addEventListener('click', hit);
+  bead.addEventListener('keydown', e=>{ if (e.key===' '||e.key==='Enter'){ e.preventDefault(); hit(); } });
+})();
+
+/* ───────── sound: generated, no files ───────── */
+let AC = null, pad = null, padOn = false;
+function ensureAC(){
+  if (!AC) AC = new (window.AudioContext||window.webkitAudioContext)();
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+function chime(big){
+  if (!padOn) return;
+  const ac = ensureAC(), t = ac.currentTime;
+  const o = ac.createOscillator(), g = ac.createGain();
+  o.type = 'sine';
+  o.frequency.value = big ? 880 : 587.33;
+  g.gain.setValueAtTime(0, t);
+  g.gain.linearRampToValueAtTime(big?.05:.028, t+.012);
+  g.gain.exponentialRampToValueAtTime(.0001, t+(big?1.4:.7));
+  o.connect(g).connect(ac.destination);
+  o.start(t); o.stop(t+1.5);
+}
+document.getElementById('snd').addEventListener('click', function(){
+  const ac = ensureAC();
+  if (!padOn){
+    const g = ac.createGain(); g.gain.value = 0;
+    const lp = ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value = 420; lp.Q.value = .6;
+    const a = ac.createOscillator(), b = ac.createOscillator(), c = ac.createOscillator();
+    a.type=b.type=c.type='sine';
+    a.frequency.value = 110;    // A2
+    b.frequency.value = 164.81; // E3
+    c.frequency.value = 220.4;  // A3, slightly detuned
+    const lfo = ac.createOscillator(), lg = ac.createGain();
+    lfo.frequency.value = .07; lg.gain.value = .012;
+    lfo.connect(lg).connect(g.gain);
+    [a,b,c].forEach(o=>o.connect(lp));
+    lp.connect(g).connect(ac.destination);
+    a.start(); b.start(); c.start(); lfo.start();
+    g.gain.setValueAtTime(0, ac.currentTime);
+    g.gain.linearRampToValueAtTime(.035, ac.currentTime + 2.4);
+    pad = {g, nodes:[a,b,c,lfo]};
+    padOn = true; this.classList.add('on');
+  } else {
+    pad.g.gain.linearRampToValueAtTime(0, ac.currentTime + 1.1);
+    const p = pad; setTimeout(()=>p.nodes.forEach(n=>{try{n.stop()}catch(e){}}), 1300);
+    pad = null; padOn = false; this.classList.remove('on');
+  }
+});
+
+/* ───────── sparks on click ───────── */
+if (!RM){
+  const GLYPHS = ['٭','·','✦','◦','۞'];
+  addEventListener('pointerdown', e=>{
+    const n = 2 + ((Math.random()*2)|0);
+    for (let i=0;i<n;i++){
+      const s = document.createElement('span');
+      s.className = 'spark-el';
+      s.textContent = GLYPHS[(Math.random()*GLYPHS.length)|0];
+      s.style.left = e.clientX+'px'; s.style.top = e.clientY+'px';
+      s.style.fontSize = (9 + Math.random()*9)+'px';
+      s.style.setProperty('--dx', ((Math.random()-.5)*110)+'px');
+      s.style.setProperty('--dy', (-40 - Math.random()*90)+'px');
+      document.body.appendChild(s);
+      setTimeout(()=>s.remove(), 1300);
+    }
+  }, {passive:true});
+}
+
+/* ───────── seal easter egg ───────── */
+document.getElementById('seal').addEventListener('click', function(){
+  this.textContent = 'آمِين يَا رَبَّ ٱلْعَالَمِين';
+  this.style.fontSize = '1rem';
+  this.style.letterSpacing = '2px';
+  chime(true);
+});
+})();
+</script>
+</body>
+</html>
